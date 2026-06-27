@@ -15,17 +15,15 @@
 */
 
 const appState = {
+  tasks: [],
 
-    tasks: [],
+  currentFilter: "all",
 
-    currentFilter: "all",
+  searchQuery: "",
 
-    searchQuery: "",
+  editingTaskId: null,
 
-    editingTaskId: null,
-
-    theme: "light"
-
+  theme: "light",
 };
 
 /* ==========================================================
@@ -61,9 +59,7 @@ const completedTasks = document.getElementById("completedTasks");
 
 const todayTasks = document.getElementById("todayTasks");
 
-const filterButtons =
-document.querySelectorAll(".filter-btn");
-
+const filterButtons = document.querySelectorAll(".filter-btn");
 
 /* ==========================================================
                 APPLICATION INITIALIZATION
@@ -77,12 +73,10 @@ document.querySelectorAll(".filter-btn");
     preparing the application.
 */
 
-function initializeApplication(){
+function initializeApplication() {
+  bindEvents();
 
-    bindEvents();
-
-    renderApplication();
-
+  renderApplication();
 }
 
 /* ==========================================================
@@ -96,18 +90,13 @@ function initializeApplication(){
     starts here.
 */
 
-function bindEvents(){
+function bindEvents() {
+  taskForm.addEventListener(
+    "submit",
 
-    taskForm.addEventListener(
-
-        "submit",
-
-        handleTaskSubmission
-
-    );
-
+    handleTaskSubmission,
+  );
 }
-
 
 /* ==========================================================
                 APPLICATION RENDER
@@ -123,26 +112,86 @@ function bindEvents(){
     we centralize rendering.
 */
 
-function renderApplication(){
+function renderApplication() {
+  renderStatistics();
 
-    renderStatistics();
-
-    renderTaskList();
-
+  renderTaskList();
 }
 
+function renderStatistics() {
+  totalTasks.textContent = appState.tasks.length;
 
-function renderStatistics(){
+  pendingTasks.textContent = 0;
 
-    totalTasks.textContent =
-    appState.tasks.length;
+  completedTasks.textContent = 0;
 
-    pendingTasks.textContent = 0;
+  todayTasks.textContent = 0;
+}
 
-    completedTasks.textContent = 0;
+/* ==========================================================
+                    TASK CARD TEMPLATE
+========================================================== */
 
-    todayTasks.textContent = 0;
+function createTaskCard(task) {
+  return `
 
+        <article class="task-card">
+
+            <div class="task-header">
+
+                <div>
+
+                    <h3>
+
+                        ${task.title}
+
+                    </h3>
+
+                    <p>
+
+                        ${task.description}
+
+                    </p>
+
+                </div>
+
+                <span class="priority ${task.priority.toLowerCase()}">
+
+                    ${task.priority}
+
+                </span>
+
+            </div>
+
+            <div class="task-footer">
+
+                <span>
+
+                    📅 ${task.dueDate || "No Due Date"}
+
+                </span>
+
+                <div class="task-actions">
+
+                    <button>
+
+                        Edit
+
+                    </button>
+
+                    <button>
+
+                        Delete
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </article>
+
+    `;
 }
 
 function renderTaskList() {
@@ -153,21 +202,13 @@ function renderTaskList() {
 
     }
 
-    const task = appState.tasks[0];
+    const html = createTaskCard(
 
-    taskList.innerHTML = `
+        appState.tasks[0]
 
-        <div class="task-card">
+    );
 
-            <h3>${task.title}</h3>
-
-            <p>${task.description}</p>
-
-            <span>${task.priority}</span>
-
-        </div>
-
-    `;
+    taskList.innerHTML = html;
 
 }
 
@@ -176,72 +217,57 @@ function renderTaskList() {
 ========================================================== */
 
 function validateTaskForm() {
+  if (taskTitle.value.trim() === "") {
+    alert("Task title is required.");
 
-    if (taskTitle.value.trim() === "") {
+    return false;
+  }
 
-        alert("Task title is required.");
+  if (taskTitle.value.trim().length < 3) {
+    alert("Task title must contain at least 3 characters.");
 
-        return false;
+    return false;
+  }
 
-    }
-
-    if (taskTitle.value.trim().length < 3) {
-
-        alert("Task title must contain at least 3 characters.");
-
-        return false;
-
-    }
-
-    return true;
-
+  return true;
 }
 
 function handleTaskSubmission(event) {
+  event.preventDefault();
 
-    event.preventDefault();
+  const isFormValid = validateTaskForm();
 
-    const isFormValid = validateTaskForm();
+  if (!isFormValid) {
+    return;
+  }
 
-    if (!isFormValid) {
+  const newTask = createTaskObject();
 
-        return;
+  appState.tasks.push(newTask);
 
-    }
+  renderApplication();
 
-    const newTask = createTaskObject();
-
-    appState.tasks.push(newTask);
-
-    renderApplication();
-
-    taskForm.reset();
-
+  taskForm.reset();
 }
 
+function createTaskObject() {
+  const timestamp = Date.now();
 
-function createTaskObject(){
+  return {
+    id: timestamp,
 
-    const timestamp = Date.now();
+    title: taskTitle.value.trim(),
 
-    return{
+    description: taskDescription.value.trim(),
 
-        id: timestamp,
+    priority: taskPriority.value,
 
-        title: taskTitle.value.trim(),
+    dueDate: taskDate.value,
 
-        description: taskDescription.value.trim(),
+    completed: false,
 
-        priority: taskPriority.value,
-
-        dueDate: taskDate.value,
-
-        completed: false,
-
-        createdAt: timestamp
-
-    };
-
+    createdAt: timestamp,
+  };
 }
 
 //Application starts.
