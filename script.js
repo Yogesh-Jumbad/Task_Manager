@@ -61,6 +61,8 @@ const todayTasks = document.getElementById("todayTasks");
 
 const filterButtons = document.querySelectorAll(".filter-btn");
 
+const toast = document.getElementById("toast");
+
 /* ==========================================================
                 APPLICATION INITIALIZATION
 ========================================================== */
@@ -297,13 +299,13 @@ function renderTaskList() {
 
 function validateTaskForm() {
   if (taskTitle.value.trim() === "") {
-    alert("Task title is required.");
+    showToast("Task title is required.");
 
     return false;
   }
 
   if (taskTitle.value.trim().length < 3) {
-    alert("Task title must contain at least 3 characters.");
+    showToast("Task title must contain at least 3 characters.");
 
     return false;
   }
@@ -323,12 +325,14 @@ function handleTaskSubmission(event) {
   if (appState.editingTaskId) {
 
     updateTask();
+    showToast("Task updated successfully.");
 
   } else {
 
     const newTask = createTaskObject();
 
     appState.tasks.unshift(newTask);
+    showToast("Task added successfully.");
 
   }
 
@@ -383,10 +387,12 @@ function handleTaskActions(event) {
 
     case "delete":
       deleteTask(taskId);
+      showToast("Task deleted successfully.");
       break;
 
     case "toggle":
       toggleTask(taskId);
+      showToast("Task status updated.");
       break;
 
     case "edit":
@@ -524,6 +530,20 @@ function loadTasks() {
     appState.tasks = JSON.parse(savedTasks);
 
   }
+
+}
+
+function showToast(message) {
+
+  toast.textContent = message;
+
+  toast.classList.add("show");
+
+  setTimeout(function () {
+
+    toast.classList.remove("show");
+
+  }, 2500);
 
 }
 

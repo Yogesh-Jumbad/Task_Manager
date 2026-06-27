@@ -987,3 +987,42 @@ select:focus{
     opacity:.6;
 
 }
+
+
+/* ================= TOAST ================= */
+
+#toast{
+
+    position:fixed;
+
+    top:25px;
+
+    right:25px;
+
+    background:#4F46E5;
+
+    color:#fff;
+
+    padding:14px 22px;
+
+    border-radius:10px;
+
+    opacity:0;
+
+    transform:translateY(-20px);
+
+    transition:.3s;
+
+    pointer-events:none;
+
+    z-index:999;
+
+}
+
+#toast.show{
+
+    opacity:1;
+
+    transform:translateY(0);
+
+}
