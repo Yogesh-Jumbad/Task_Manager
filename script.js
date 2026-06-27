@@ -320,15 +320,27 @@ function handleTaskSubmission(event) {
     return;
   }
 
-  const newTask = createTaskObject();
+  if (appState.editingTaskId) {
 
-  appState.tasks.unshift(newTask);
+    updateTask();
+
+  } else {
+
+    const newTask = createTaskObject();
+
+    appState.tasks.unshift(newTask);
+
+  }
 
   saveTasks();
 
   renderApplication();
 
   taskForm.reset();
+
+  appState.editingTaskId = null;
+
+  document.querySelector(".add-btn").textContent = "Add Task";
 }
 
 function createTaskObject() {
@@ -370,15 +382,15 @@ function handleTaskActions(event) {
   switch (action) {
 
     case "delete":
-
       deleteTask(taskId);
-
       break;
 
     case "toggle":
-
       toggleTask(taskId);
+      break;
 
+    case "edit":
+      editTask(taskId);
       break;
 
   }
@@ -424,6 +436,68 @@ function toggleTask(taskId) {
   saveTasks();
 
   renderApplication();
+
+}
+
+function editTask(taskId) {
+
+  const task = appState.tasks.find(function (task) {
+
+    return task.id === taskId;
+
+  });
+
+  if (!task) {
+
+    return;
+
+  }
+
+  taskTitle.value = task.title;
+
+  taskDescription.value = task.description;
+
+  taskPriority.value = task.priority;
+
+  taskDate.value = task.dueDate;
+
+  appState.editingTaskId = taskId;
+
+  document.querySelector(".add-btn").textContent = "Update Task";
+
+  taskTitle.focus();
+
+}
+
+function updateTask() {
+
+  appState.tasks = appState.tasks.map(function (task) {
+
+    if (task.id === appState.editingTaskId) {
+
+      return {
+
+        ...task,
+
+        title: taskTitle.value.trim(),
+
+        description: taskDescription.value.trim(),
+
+        priority: taskPriority.value,
+
+        dueDate: taskDate.value
+
+      };
+
+    }
+
+    return task;
+
+  });
+
+  appState.editingTaskId = null;
+
+  document.querySelector(".add-btn").textContent = "Add Task";
 
 }
 /* ==========================================================
