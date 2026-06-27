@@ -96,6 +96,14 @@ function bindEvents() {
 
     handleTaskSubmission,
   );
+
+  taskList.addEventListener(
+
+    "click",
+
+    handleTaskActions
+
+  );
 }
 
 /* ==========================================================
@@ -114,18 +122,27 @@ function bindEvents() {
 
 function renderApplication() {
   renderStatistics();
-
   renderTaskList();
 }
 
 function renderStatistics() {
+
   totalTasks.textContent = appState.tasks.length;
 
-  pendingTasks.textContent = 0;
+  const completed = appState.tasks.filter(function (task) {
 
-  completedTasks.textContent = 0;
+    return task.completed;
+
+  }).length;
+
+  const pending = appState.tasks.length - completed;
+
+  completedTasks.textContent = completed;
+
+  pendingTasks.textContent = pending;
 
   todayTasks.textContent = 0;
+
 }
 
 /* ==========================================================
@@ -135,7 +152,7 @@ function renderStatistics() {
 function createTaskCard(task) {
   return `
 
-        <article class="task-card">
+       <article class="task-card" data-id="${task.id}">
 
             <div class="task-header">
 
@@ -173,16 +190,12 @@ function createTaskCard(task) {
 
                 <div class="task-actions">
 
-                    <button>
-
-                        Edit
-
+                    <button class="edit-btn" data-action="edit">
+                       Edit
                     </button>
 
-                    <button>
-
-                        Delete
-
+                   <button class="delete-btn" data-action="delete">
+                      Delete
                     </button>
 
                 </div>
@@ -195,10 +208,8 @@ function createTaskCard(task) {
 }
 
 function renderTaskList() {
-
-    if (appState.tasks.length === 0) {
-
-        taskList.innerHTML = `
+  if (appState.tasks.length === 0) {
+    taskList.innerHTML = `
 
             <div class="empty-state">
 
@@ -217,20 +228,16 @@ function renderTaskList() {
 
         `;
 
-        return;
+    return;
+  }
 
-    }
+  let html = "";
 
-    let html = "";
+  appState.tasks.forEach(function (task) {
+    html += createTaskCard(task);
+  });
 
-    appState.tasks.forEach(function(task){
-
-        html += createTaskCard(task);
-
-    });
-
-    taskList.innerHTML = html;
-
+  taskList.innerHTML = html;
 }
 
 /* ==========================================================
@@ -264,7 +271,7 @@ function handleTaskSubmission(event) {
 
   const newTask = createTaskObject();
 
-  appState.tasks.push(newTask);
+  appState.tasks.unshift(newTask);
 
   renderApplication();
 
@@ -289,6 +296,38 @@ function createTaskObject() {
 
     createdAt: timestamp,
   };
+}
+
+
+function handleTaskActions(event) {
+
+  const action = event.target.dataset.action;
+
+  if (action !== "delete") {
+
+    return;
+
+  }
+
+  const taskCard = event.target.closest(".task-card");
+
+  const taskId = Number(taskCard.dataset.id);
+
+  deleteTask(taskId);
+
+}
+
+
+function deleteTask(taskId) {
+
+  appState.tasks = appState.tasks.filter(function (task) {
+
+    return task.id !== taskId;
+
+  });
+
+  renderApplication();
+
 }
 
 //Application starts.

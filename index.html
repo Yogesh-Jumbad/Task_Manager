@@ -5,33 +5,26 @@
 
     <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>TaskFlow Pro</title>
 
     <!-- Google Font -->
 
-    <link rel="preconnect"
-        href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
 
-    <link rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
 
     <!-- Font Awesome -->
 
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
     <!-- CSS -->
 
-    <link rel="stylesheet"
-        href="style.css">
+    <link rel="stylesheet" href="style.css">
 
 </head>
 
@@ -156,14 +149,9 @@
 
             <form id="taskForm">
 
-                <input
-                    type="text"
-                    id="taskTitle"
-                    placeholder="Task Title">
+                <input type="text" id="taskTitle" placeholder="Task Title">
 
-                <textarea
-                    id="taskDescription"
-                    placeholder="Task Description"></textarea>
+                <textarea id="taskDescription" placeholder="Task Description"></textarea>
 
                 <div class="row">
 
@@ -189,15 +177,11 @@
 
                     </select>
 
-                    <input
-                        type="date"
-                        id="taskDate">
+                    <input type="date" id="taskDate">
 
                 </div>
 
-                <button
-                    type="submit"
-                    class="add-btn">
+                <button type="submit" class="add-btn">
 
                     <i class="fa-solid fa-plus"></i>
 
@@ -215,10 +199,7 @@
 
             <i class="fa-solid fa-magnifying-glass"></i>
 
-            <input
-                type="text"
-                id="searchInput"
-                placeholder="Search tasks...">
+            <input type="text" id="searchInput" placeholder="Search tasks...">
 
         </section>
 
@@ -226,24 +207,17 @@
 
         <section class="filters">
 
-            <button class="filter-btn active">
-
+            <button class="filter-btn active" data-filter="all">
                 All
-
             </button>
 
-            <button class="filter-btn">
-
+            <button class="filter-btn" data-filter="pending">
                 Pending
-
             </button>
 
-            <button class="filter-btn">
-
+            <button class="filter-btn" data-filter="completed">
                 Completed
-
             </button>
-
         </section>
 
         <!-- ================= TASK LIST ================= -->
@@ -262,9 +236,7 @@
 
             </div>
 
-            <div
-                class="task-list"
-                id="taskList">
+            <div class="task-list" id="taskList">
 
                 <div class="empty-state">
 
