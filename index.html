@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+
+<!--
+=========================================================
+Project : TaskFlow Pro
+Author  : Yogesh Jumbad
+Purpose : Smart Task Management Dashboard
+Tech    : HTML5 | CSS3 | Vanilla JavaScript (ES6)
+=========================================================
+-->
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <!-- Responsive Website -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TaskFlow Pro</title>
+
+    <!-- CSS Files -->
+
+    <link rel="stylesheet" href="style.css">
+
+
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <header class="header">
+
+            <h1>TaskFlow Pro</h1>
+
+            <p>
+                Organize your tasks efficiently using Vanilla JavaScript
+            </p>
+
+        </header>
+
+        <main>
+
+            <section class="dashboard">
+
+                <div class="task-form">
+
+                    <h2>Add New Task</h2>
+
+                    <form>
+
+                        <input
+                            type="text"
+                            placeholder="Task Title">
+
+                        <textarea
+                            placeholder="Task Description"></textarea>
+
+                        <select>
+
+                            <option>High Priority</option>
+
+                            <option>Medium Priority</option>
+
+                            <option>Low Priority</option>
+
+                        </select>
+
+                        <input type="date">
+
+                        <button>
+
+                            Add Task
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+                <div class="statistics">
+
+                    <div class="card">
+
+                        <h3>Total</h3>
+
+                        <p>0</p>
+
+                    </div>
+
+                    <div class="card">
+
+                        <h3>Completed</h3>
+
+                        <p>0</p>
+
+                    </div>
+
+                    <div class="card">
+
+                        <h3>Pending</h3>
+
+                        <p>0</p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <section class="search-section">
+
+                <input
+                    type="text"
+                    placeholder="Search Task...">
+
+            </section>
+
+            <section class="filter-section">
+
+                <button>All</button>
+
+                <button>Completed</button>
+
+                <button>Pending</button>
+
+            </section>
+
+            <section class="task-list">
+
+                <div class="empty-state">
+
+                    <h2>No Tasks Yet</h2>
+
+                    <p>
+                        Start by creating your first task.
+                    </p>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
