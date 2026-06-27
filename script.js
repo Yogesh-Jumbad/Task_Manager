@@ -156,21 +156,37 @@ function createTaskCard(task) {
 
             <div class="task-header">
 
-                <div>
+                <div class="task-info">
 
-                    <h3>
+    <label class="checkbox-container">
 
-                        ${task.title}
+        <input
+            type="checkbox"
+            class="complete-checkbox"
+            data-action="toggle"
+            ${task.completed ? "checked" : ""}>
 
-                    </h3>
+        <span class="checkmark"></span>
 
-                    <p>
+    </label>
 
-                        ${task.description}
+    <div>
 
-                    </p>
+        <h3 class="${task.completed ? "completed-task" : ""}">
 
-                </div>
+            ${task.title}
+
+        </h3>
+
+        <p>
+
+            ${task.description}
+
+        </p>
+
+    </div>
+
+</div>
 
                 <span class="priority ${task.priority.toLowerCase()}">
 
@@ -191,10 +207,12 @@ function createTaskCard(task) {
                 <div class="task-actions">
 
                     <button class="edit-btn" data-action="edit">
-                       Edit
+                        <i class="fa-solid fa-pen"></i>
+                        Edit
                     </button>
 
                    <button class="delete-btn" data-action="delete">
+                      <i class="fa-solid fa-trash"></i>
                       Delete
                     </button>
 
@@ -303,17 +321,31 @@ function handleTaskActions(event) {
 
   const action = event.target.dataset.action;
 
-  if (action !== "delete") {
+  const taskCard = event.target.closest(".task-card");
+
+  if (!taskCard) {
 
     return;
 
   }
 
-  const taskCard = event.target.closest(".task-card");
-
   const taskId = Number(taskCard.dataset.id);
 
-  deleteTask(taskId);
+  switch (action) {
+
+    case "delete":
+
+      deleteTask(taskId);
+
+      break;
+
+    case "toggle":
+
+      toggleTask(taskId);
+
+      break;
+
+  }
 
 }
 
@@ -323,6 +355,31 @@ function deleteTask(taskId) {
   appState.tasks = appState.tasks.filter(function (task) {
 
     return task.id !== taskId;
+
+  });
+
+  renderApplication();
+
+}
+
+
+function toggleTask(taskId) {
+
+  appState.tasks = appState.tasks.map(function (task) {
+
+    if (task.id === taskId) {
+
+      return {
+
+        ...task,
+
+        completed: !task.completed
+
+      };
+
+    }
+
+    return task;
 
   });
 
