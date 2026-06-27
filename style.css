@@ -1026,3 +1026,99 @@ select:focus{
     transform:translateY(0);
 
 }
+
+
+
+/* ================= DELETE MODAL ================= */
+
+.modal-overlay{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.5);
+
+    display:none;
+
+    justify-content:center;
+
+    align-items:center;
+
+    z-index:1000;
+
+}
+
+.modal-overlay.show{
+
+    display:flex;
+
+}
+
+.modal{
+
+    background:#fff;
+
+    width:400px;
+
+    max-width:90%;
+
+    border-radius:14px;
+
+    padding:25px;
+
+}
+
+.modal h2{
+
+    margin-bottom:10px;
+
+}
+
+.modal p{
+
+    color:#666;
+
+    margin-bottom:20px;
+
+}
+
+.modal-actions{
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    gap:10px;
+
+}
+
+.secondary-btn{
+
+    padding:10px 18px;
+
+    border:none;
+
+    background:#E5E7EB;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+}
+
+.danger-btn{
+
+    padding:10px 18px;
+
+    border:none;
+
+    background:#DC2626;
+
+    color:#fff;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+}

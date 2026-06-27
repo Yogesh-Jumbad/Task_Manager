@@ -15,6 +15,7 @@
 */
 
 const appState = {
+
   tasks: [],
 
   currentFilter: "all",
@@ -23,7 +24,10 @@ const appState = {
 
   editingTaskId: null,
 
-  theme: "light",
+  deleteTaskId: null,
+
+  theme: "light"
+
 };
 
 /* ==========================================================
@@ -62,6 +66,12 @@ const todayTasks = document.getElementById("todayTasks");
 const filterButtons = document.querySelectorAll(".filter-btn");
 
 const toast = document.getElementById("toast");
+
+const deleteModal = document.getElementById("deleteModal");
+
+const cancelDelete = document.getElementById("cancelDelete");
+
+const confirmDelete = document.getElementById("confirmDelete");
 
 /* ==========================================================
                 APPLICATION INITIALIZATION
@@ -118,6 +128,22 @@ function bindEvents() {
     button.addEventListener("click", handleFilterChange);
 
   });
+
+  cancelDelete.addEventListener(
+
+    "click",
+
+    closeDeleteModal
+
+  );
+
+  confirmDelete.addEventListener(
+
+    "click",
+
+    confirmDeleteTask
+
+  );
 }
 
 /* ==========================================================
@@ -386,8 +412,8 @@ function handleTaskActions(event) {
   switch (action) {
 
     case "delete":
-      deleteTask(taskId);
-      showToast("Task deleted successfully.");
+      openDeleteModal(taskId);
+      // showToast("Task deleted successfully.");
       break;
 
     case "toggle":
@@ -403,6 +429,29 @@ function handleTaskActions(event) {
 
 }
 
+function openDeleteModal(taskId) {
+
+  appState.deleteTaskId = taskId;
+
+  deleteModal.classList.add("show");
+
+}
+
+function closeDeleteModal() {
+
+  appState.deleteTaskId = null;
+
+  deleteModal.classList.remove("show");
+
+}
+
+function confirmDeleteTask() {
+
+  deleteTask(appState.deleteTaskId);
+
+  closeDeleteModal();
+
+}
 
 function deleteTask(taskId) {
 
