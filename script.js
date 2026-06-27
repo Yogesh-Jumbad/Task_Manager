@@ -75,7 +75,7 @@ const filterButtons = document.querySelectorAll(".filter-btn");
 
 function initializeApplication() {
   bindEvents();
-
+  loadTasks();
   renderApplication();
 }
 
@@ -291,6 +291,8 @@ function handleTaskSubmission(event) {
 
   appState.tasks.unshift(newTask);
 
+  saveTasks();
+
   renderApplication();
 
   taskForm.reset();
@@ -315,6 +317,7 @@ function createTaskObject() {
     createdAt: timestamp,
   };
 }
+
 
 
 function handleTaskActions(event) {
@@ -358,6 +361,8 @@ function deleteTask(taskId) {
 
   });
 
+  saveTasks();
+
   renderApplication();
 
 }
@@ -383,7 +388,35 @@ function toggleTask(taskId) {
 
   });
 
+  saveTasks();
+
   renderApplication();
+
+}
+/* ==========================================================
+                LOCAL STORAGE
+========================================================== */
+
+function saveTasks() {
+
+  localStorage.setItem(
+
+    "tasks",
+
+    JSON.stringify(appState.tasks)
+
+  );
+
+}
+function loadTasks() {
+
+  const savedTasks = localStorage.getItem("tasks");
+
+  if (savedTasks) {
+
+    appState.tasks = JSON.parse(savedTasks);
+
+  }
 
 }
 
