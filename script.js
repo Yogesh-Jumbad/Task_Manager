@@ -198,15 +198,36 @@ function renderTaskList() {
 
     if (appState.tasks.length === 0) {
 
+        taskList.innerHTML = `
+
+            <div class="empty-state">
+
+                <i class="fa-regular fa-folder-open"></i>
+
+                <h3>No Tasks Yet</h3>
+
+                <p>
+
+                    Create your first task and
+                    start being productive.
+
+                </p>
+
+            </div>
+
+        `;
+
         return;
 
     }
 
-    const html = createTaskCard(
+    let html = "";
 
-        appState.tasks[0]
+    appState.tasks.forEach(function(task){
 
-    );
+        html += createTaskCard(task);
+
+    });
 
     taskList.innerHTML = html;
 
