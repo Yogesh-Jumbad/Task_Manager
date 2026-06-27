@@ -1,29 +1,37 @@
 <!DOCTYPE html>
-
-<!--
-=========================================================
-Project : TaskFlow Pro
-Author  : Yogesh Jumbad
-Purpose : Smart Task Management Dashboard
-Tech    : HTML5 | CSS3 | Vanilla JavaScript (ES6)
-=========================================================
--->
-
 <html lang="en">
 
 <head>
 
     <meta charset="UTF-8">
-    <!-- Responsive Website -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
     <title>TaskFlow Pro</title>
 
-    <!-- CSS Files -->
+    <!-- Google Font -->
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect"
+        href="https://fonts.googleapis.com">
 
+    <link rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin>
 
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <!-- CSS -->
+
+    <link rel="stylesheet"
+        href="style.css">
 
 </head>
 
@@ -31,118 +39,255 @@ Tech    : HTML5 | CSS3 | Vanilla JavaScript (ES6)
 
     <div class="container">
 
-        <header class="header">
+        <!-- ================= HERO ================= -->
 
-            <h1>TaskFlow Pro</h1>
+        <header class="hero">
 
-            <p>
-                Organize your tasks efficiently using Vanilla JavaScript
-            </p>
+            <div class="hero-content">
+
+                <span class="badge">
+
+                    Productivity Dashboard
+
+                </span>
+
+                <h1>
+
+                    TaskFlow Pro
+
+                </h1>
+
+                <p>
+
+                    Plan smarter, organize efficiently and
+                    stay focused on what truly matters.
+
+                </p>
+
+                <button class="hero-btn">
+
+                    <i class="fa-solid fa-plus"></i>
+
+                    Create New Task
+
+                </button>
+
+            </div>
 
         </header>
 
-        <main>
+        <!-- ================= OVERVIEW ================= -->
 
-            <section class="dashboard">
+        <section class="overview">
 
-                <div class="task-form">
+            <div class="card">
 
-                    <h2>Add New Task</h2>
+                <div class="icon blue">
 
-                    <form>
-
-                        <input
-                            type="text"
-                            placeholder="Task Title">
-
-                        <textarea
-                            placeholder="Task Description"></textarea>
-
-                        <select>
-
-                            <option>High Priority</option>
-
-                            <option>Medium Priority</option>
-
-                            <option>Low Priority</option>
-
-                        </select>
-
-                        <input type="date">
-
-                        <button>
-
-                            Add Task
-
-                        </button>
-
-                    </form>
+                    <i class="fa-solid fa-list-check"></i>
 
                 </div>
 
-                <div class="statistics">
+                <h2 id="totalTasks">0</h2>
 
-                    <div class="card">
+                <span>Total Tasks</span>
 
-                        <h3>Total</h3>
+            </div>
 
-                        <p>0</p>
+            <div class="card">
 
-                    </div>
+                <div class="icon orange">
 
-                    <div class="card">
-
-                        <h3>Completed</h3>
-
-                        <p>0</p>
-
-                    </div>
-
-                    <div class="card">
-
-                        <h3>Pending</h3>
-
-                        <p>0</p>
-
-                    </div>
+                    <i class="fa-solid fa-hourglass-half"></i>
 
                 </div>
 
-            </section>
+                <h2 id="pendingTasks">0</h2>
 
-            <section class="search-section">
+                <span>Pending</span>
+
+            </div>
+
+            <div class="card">
+
+                <div class="icon green">
+
+                    <i class="fa-solid fa-circle-check"></i>
+
+                </div>
+
+                <h2 id="completedTasks">0</h2>
+
+                <span>Completed</span>
+
+            </div>
+
+            <div class="card">
+
+                <div class="icon red">
+
+                    <i class="fa-solid fa-calendar-days"></i>
+
+                </div>
+
+                <h2 id="todayTasks">0</h2>
+
+                <span>Due Today</span>
+
+            </div>
+
+        </section>
+
+        <!-- ================= CREATE TASK ================= -->
+
+        <section class="task-panel">
+
+            <div class="section-title">
+
+                <h2>Create Task</h2>
+
+                <p>
+
+                    Add a new task to your workspace.
+
+                </p>
+
+            </div>
+
+            <form id="taskForm">
 
                 <input
                     type="text"
-                    placeholder="Search Task...">
+                    id="taskTitle"
+                    placeholder="Task Title">
 
-            </section>
+                <textarea
+                    id="taskDescription"
+                    placeholder="Task Description"></textarea>
 
-            <section class="filter-section">
+                <div class="row">
 
-                <button>All</button>
+                    <select id="taskPriority">
 
-                <button>Completed</button>
+                        <option value="High">
 
-                <button>Pending</button>
+                            High Priority
 
-            </section>
+                        </option>
 
-            <section class="task-list">
+                        <option value="Medium">
+
+                            Medium Priority
+
+                        </option>
+
+                        <option value="Low">
+
+                            Low Priority
+
+                        </option>
+
+                    </select>
+
+                    <input
+                        type="date"
+                        id="taskDate">
+
+                </div>
+
+                <button
+                    type="submit"
+                    class="add-btn">
+
+                    <i class="fa-solid fa-plus"></i>
+
+                    Add Task
+
+                </button>
+
+            </form>
+
+        </section>
+
+        <!-- ================= SEARCH ================= -->
+
+        <section class="search-box">
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search tasks...">
+
+        </section>
+
+        <!-- ================= FILTERS ================= -->
+
+        <section class="filters">
+
+            <button class="filter-btn active">
+
+                All
+
+            </button>
+
+            <button class="filter-btn">
+
+                Pending
+
+            </button>
+
+            <button class="filter-btn">
+
+                Completed
+
+            </button>
+
+        </section>
+
+        <!-- ================= TASK LIST ================= -->
+
+        <section class="task-container">
+
+            <div class="section-title">
+
+                <h2>My Tasks</h2>
+
+                <p>
+
+                    Keep track of everything in one place.
+
+                </p>
+
+            </div>
+
+            <div
+                class="task-list"
+                id="taskList">
 
                 <div class="empty-state">
 
-                    <h2>No Tasks Yet</h2>
+                    <i class="fa-regular fa-folder-open"></i>
+
+                    <h3>
+
+                        No Tasks Yet
+
+                    </h3>
 
                     <p>
-                        Start by creating your first task.
+
+                        Create your first task and
+                        start being productive.
+
                     </p>
 
                 </div>
 
-            </section>
+            </div>
 
-        </main>
+        </section>
 
     </div>
 
