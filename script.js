@@ -145,9 +145,29 @@ function renderStatistics(){
 
 }
 
-function renderTaskList(){
+function renderTaskList() {
 
-    console.table("Rendering Tasks");
+    if (appState.tasks.length === 0) {
+
+        return;
+
+    }
+
+    const task = appState.tasks[0];
+
+    taskList.innerHTML = `
+
+        <div class="task-card">
+
+            <h3>${task.title}</h3>
+
+            <p>${task.description}</p>
+
+            <span>${task.priority}</span>
+
+        </div>
+
+    `;
 
 }
 
@@ -193,7 +213,9 @@ function handleTaskSubmission(event) {
 
     appState.tasks.push(newTask);
 
-    console.table(appState.tasks);
+    renderApplication();
+
+    taskForm.reset();
 
 }
 
