@@ -147,16 +147,78 @@ function renderStatistics(){
 
 function renderTaskList(){
 
-    console.log("Rendering Tasks");
+    console.table("Rendering Tasks");
+
+}
+
+/* ==========================================================
+                    FORM VALIDATION
+========================================================== */
+
+function validateTaskForm() {
+
+    if (taskTitle.value.trim() === "") {
+
+        alert("Task title is required.");
+
+        return false;
+
+    }
+
+    if (taskTitle.value.trim().length < 3) {
+
+        alert("Task title must contain at least 3 characters.");
+
+        return false;
+
+    }
+
+    return true;
+
+}
+
+function handleTaskSubmission(event) {
+
+    event.preventDefault();
+
+    const isFormValid = validateTaskForm();
+
+    if (!isFormValid) {
+
+        return;
+
+    }
+
+    const newTask = createTaskObject();
+
+    appState.tasks.push(newTask);
+
+    console.table(appState.tasks);
 
 }
 
 
-function handleTaskSubmission(event){
+function createTaskObject(){
 
-    event.preventDefault();
+    const timestamp = Date.now();
 
-    console.log("Form Submitted");
+    return{
+
+        id: timestamp,
+
+        title: taskTitle.value.trim(),
+
+        description: taskDescription.value.trim(),
+
+        priority: taskPriority.value,
+
+        dueDate: taskDate.value,
+
+        completed: false,
+
+        createdAt: timestamp
+
+    };
 
 }
 
