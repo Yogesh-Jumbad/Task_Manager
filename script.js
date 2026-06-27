@@ -111,6 +111,11 @@ function bindEvents() {
     handleSearch
 
   );
+  filterButtons.forEach(function (button) {
+
+    button.addEventListener("click", handleFilterChange);
+
+  });
 }
 
 /* ==========================================================
@@ -236,15 +241,39 @@ function renderTaskList() {
 
   const filteredTasks = appState.tasks.filter(function (task) {
 
-    return task.title
+    const matchesSearch = task.title
       .toLowerCase()
       .includes(appState.searchQuery);
+
+    if (appState.currentFilter === "pending") {
+
+      return matchesSearch && !task.completed;
+
+    }
+
+    if (appState.currentFilter === "completed") {
+
+      return matchesSearch && task.completed;
+
+    }
+
+    return matchesSearch;
 
   });
 
   if (filteredTasks.length === 0) {
 
-    taskList.innerHTML = `...`;
+    taskList.innerHTML = `
+            <div class="empty-state">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                <h3>No Matching Tasks</h3>
+
+                <p>Try another search.</p>
+
+            </div>
+        `;
 
     return;
 
@@ -424,6 +453,7 @@ function loadTasks() {
 
 }
 
+// Handle Search
 
 function handleSearch(event) {
 
@@ -434,6 +464,33 @@ function handleSearch(event) {
   renderApplication();
 
 }
+
+function handleFilterChange(event) {
+
+  appState.currentFilter = event.target.dataset.filter;
+
+  updateActiveFilterButton();
+
+  renderApplication();
+
+}
+
+function updateActiveFilterButton() {
+
+  filterButtons.forEach(function (button) {
+
+    button.classList.remove("active");
+
+    if (button.dataset.filter === appState.currentFilter) {
+
+      button.classList.add("active");
+
+    }
+
+  });
+
+}
+
 
 //Application starts.
 
