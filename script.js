@@ -104,6 +104,13 @@ function bindEvents() {
     handleTaskActions
 
   );
+  searchInput.addEventListener(
+
+    "input",
+
+    handleSearch
+
+  );
 }
 
 /* ==========================================================
@@ -226,36 +233,33 @@ function createTaskCard(task) {
 }
 
 function renderTaskList() {
-  if (appState.tasks.length === 0) {
-    taskList.innerHTML = `
 
-            <div class="empty-state">
+  const filteredTasks = appState.tasks.filter(function (task) {
 
-                <i class="fa-regular fa-folder-open"></i>
+    return task.title
+      .toLowerCase()
+      .includes(appState.searchQuery);
 
-                <h3>No Tasks Yet</h3>
+  });
 
-                <p>
+  if (filteredTasks.length === 0) {
 
-                    Create your first task and
-                    start being productive.
-
-                </p>
-
-            </div>
-
-        `;
+    taskList.innerHTML = `...`;
 
     return;
+
   }
 
   let html = "";
 
-  appState.tasks.forEach(function (task) {
+  filteredTasks.forEach(function (task) {
+
     html += createTaskCard(task);
+
   });
 
   taskList.innerHTML = html;
+
 }
 
 /* ==========================================================
@@ -417,6 +421,17 @@ function loadTasks() {
     appState.tasks = JSON.parse(savedTasks);
 
   }
+
+}
+
+
+function handleSearch(event) {
+
+  appState.searchQuery =
+
+    event.target.value.toLowerCase();
+
+  renderApplication();
 
 }
 
